@@ -82,7 +82,14 @@
             android:paddingLeft="90dp"
             android:src="@drawable/baseline_person_24" />
     </LinearLayout>
-
+        <EditText
+            android:id="@+id/etSearch"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Search City"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:layout_margin="16dp"/>
     <TextView
         android:layout_marginTop="30dp"
         android:id="@+id/tv_home"
@@ -101,6 +108,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_weather"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"/>
     </LinearLayout>
 
 </FrameLayout>

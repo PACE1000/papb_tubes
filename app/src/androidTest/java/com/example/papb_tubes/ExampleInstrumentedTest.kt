@@ -1,4 +1,4 @@
-package com.example.binartujuh
+package com.example.papb_tubes
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
