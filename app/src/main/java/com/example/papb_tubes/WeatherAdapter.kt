@@ -1,6 +1,5 @@
 package com.example.papb_tubes
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -16,12 +15,17 @@ class WeatherAdapter(
         override fun areItemsTheSame(oldItem: WeatherResponse, newItem: WeatherResponse): Boolean {
             return oldItem.id == newItem.id
         }
-        override fun areContentsTheSame(oldItem: WeatherResponse, newItem: WeatherResponse): Boolean = oldItem.hashCode() == newItem.hashCode()
 
+        override fun areContentsTheSame(
+            oldItem: WeatherResponse,
+            newItem: WeatherResponse):
+                Boolean = oldItem.hashCode() == newItem.hashCode()
     }
 
-    val differ = AsyncListDiffer(this, differCallback)
+    private val differ = AsyncListDiffer(this, differCallback)
+
     fun submitData(value: List<WeatherResponse>?) = differ.submitList(value)
+
     inner class ViewHolder(private val binding: ItemRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -41,13 +45,14 @@ class WeatherAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = differ.currentList[position]
-        Log.d("WeatherAdapter", "Data size: ${differ.currentList.size}")
+
         data.let { holder.bind(data) }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return ViewHolder(ItemRowBinding.inflate(inflater,parent,false))
+        val binding = ItemRowBinding.inflate(inflater, parent, false)
+        return ViewHolder(binding)
     }
 
     override fun getItemCount(): Int = differ.currentList.size

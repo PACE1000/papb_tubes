@@ -53,67 +53,73 @@
         android:layout_marginBottom="20sp">
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingLeft="20dp"
-        android:paddingTop="30dp"
-        android:paddingRight="20dp"
-        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="20dp"
+            android:paddingTop="30dp"
+            android:paddingRight="20dp"
+            >
 
+            <TextView
+                android:id="@+id/tv_username_homepage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/poppins_r"
+                android:text="Welcome, Username"
+                android:textSize="15sp"
+                android:textStyle="normal"
+                android:textColor="@color/white"/>
+
+            <ImageView
+                android:id="@+id/iv_person"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_weight="1"
+                android:paddingLeft="90dp"
+                android:src="@drawable/baseline_person_24" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <EditText
+                android:id="@+id/etSearch"
+                android:layout_width="300dp"
+                android:layout_height="48dp"
+                android:hint="Search City"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:layout_margin="16dp"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cari"
+                android:layout_gravity="center"
+                android:id="@+id/btn_cari"/>
+        </LinearLayout>
         <TextView
-            android:id="@+id/tv_username_homepage"
+            android:layout_marginTop="30dp"
+            android:id="@+id/tv_home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_gravity="center"
             android:fontFamily="@font/poppins_r"
-            android:text="Welcome, Username"
-            android:textSize="15sp"
-            android:textStyle="normal"
+            android:text="Home"
+            android:textSize="20sp"
+            android:textStyle="bold"
             android:textColor="@color/white"/>
 
-        <ImageView
-            android:id="@+id/iv_person"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_weight="1"
-            android:paddingLeft="90dp"
-            android:src="@drawable/baseline_person_24" />
-    </LinearLayout>
-        <EditText
-            android:id="@+id/etSearch"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:hint="Search City"
-            android:imeOptions="actionSearch"
-            android:inputType="text"
-            android:layout_margin="16dp"/>
-    <TextView
-        android:layout_marginTop="30dp"
-        android:id="@+id/tv_home"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:fontFamily="@font/poppins_r"
-        android:text="Home"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="@color/white"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_homepage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp" />
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_homepage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_weather"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp" />
+
     </LinearLayout>
 
 </FrameLayout>

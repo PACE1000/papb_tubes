@@ -51,10 +51,10 @@ data class WeatherResponse(
 data class Coord(
 
 	@field:SerializedName("lon")
-	val lon: Int,
+	val lon: Float,
 
 	@field:SerializedName("lat")
-	val lat: Int
+	val lat: Float
 ):Parcelable
 
 @Parcelize
@@ -99,7 +99,7 @@ data class Wind(
 	val deg: Int,
 
 	@field:SerializedName("speed")
-	val speed: Int,
+	val speed: Float,
 
 	@field:SerializedName("gust")
 	val gust: Int

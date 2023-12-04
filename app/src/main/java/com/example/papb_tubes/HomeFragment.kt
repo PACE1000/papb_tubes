@@ -1,8 +1,6 @@
 package com.example.papb_tubes
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -15,118 +13,107 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomeFragment : Fragment() {
+// TODO: Rename parameter arguments, choose names that match
+// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+private const val ARG_PARAM1 = "param1"
+private const val ARG_PARAM2 = "param2"
 
-    private var _binding: FragmentHomeBinding? = null
+/**
+ * A simple [Fragment] subclass.
+ * Use the [HomeFragment.newInstance] factory method to
+ * create an instance of this fragment.
+ */
+class HomeFragment : Fragment(), WeatherAdapter.OnClickListener {
+    // TODO: Rename and change types of parameters
+    private var param1: String? = null
+    private var param2: String? = null
+
+    private var _binding:FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var apiService: ApiService
-    private lateinit var weatherAdapter: WeatherAdapter
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            param1 = it.getString(ARG_PARAM1)
+            param2 = it.getString(ARG_PARAM2)
+        }
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Inflate the layout for this fragment
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    companion object {
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @param param1 Parameter 1.
+         * @param param2 Parameter 2.
+         * @return A new instance of fragment HomeFragment.
+         */
+        // TODO: Rename and change types and number of parameters
+        @JvmStatic
+        fun newInstance(param1: String, param2: String) =
+            HomeFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_PARAM1, param1)
+                    putString(ARG_PARAM2, param2)
+                }
+            }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        apiService = ApiConfig.getApiService("London") // Set initial city
-
-        weatherAdapter = WeatherAdapter(object : WeatherAdapter.OnClickListener {
-            override fun onClickItem(data: WeatherResponse) {
-                // Handle item click if needed
-            }
-        })
-
-        binding.rvHomepage.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = weatherAdapter
-        }
-
-        binding.etSearch.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // Trigger search when text changes
-                searchWeather(s.toString())
-            }
-
-            override fun afterTextChanged(s: Editable?) {}
-        })
 
         binding.ivPerson.setOnClickListener {
             it.findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
         }
 
-        // Fetch initial weather data for London
-        val londonWeather = fetchAllData()
-        if (londonWeather != null) {
-            showlist(londonWeather)
+        binding.rvHomepage.apply {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = WeatherAdapter(this@HomeFragment)
         }
+
+        fetchAllData()
     }
 
-    private fun searchWeather(city: String) {
-        apiService = ApiConfig.getApiService(city)
+    private fun fetchAllData(){
+        ApiConfig.getApiService("London").getAllProvinsi("London")
+            .enqueue(object : Callback<WeatherResponse>{
+                override fun onResponse(
+                    call: Call<WeatherResponse>,
+                    response: Response<WeatherResponse>
+                ) {
+                    val body = response.body()
+                    val code = response.code()
+                    if(code == 200){
+                        showList(body)
 
-        apiService.getAllProvinsi(city).enqueue(object : Callback<WeatherResponse> {
-            override fun onResponse(
-                call: Call<WeatherResponse>,
-                response: Response<WeatherResponse>
-            ) {
-                if (response.isSuccessful) {
-                    val weatherResponse = response.body()
-                    if (weatherResponse != null) {
-                        Log.d("WeatherResponse", weatherResponse.toString())
-                        showlist(weatherResponse)
-                    } else {
-                        Log.e("WeatherResponse", "Response body is null")
                     }
-                } else {
-                    Log.e("WeatherResponse", "Error: ${response.code()}")
                 }
-            }
 
-            override fun onFailure(call: Call<WeatherResponse>, t: Throwable) {
-                // Handle failure
-            }
-        })
+                override fun onFailure(call: Call<WeatherResponse>, t: Throwable) {
+                    Log.d("MainActivity", "onFailure: ${t.message}")
+                }
+            })
     }
-
-    private fun showlist(data: WeatherResponse?) {
-        val weatherList = mutableListOf<WeatherResponse>()
-        if (data != null) {
-            weatherList.add(data)
-            weatherAdapter.submitData(weatherList)
+    private fun showList(data: WeatherResponse?){
+        val adapter = WeatherAdapter(this)
+        if(data != null){
+            adapter.submitData(listOf(data))
         }
+        binding.rvHomepage.adapter = adapter
     }
 
-    private fun fetchAllData(): WeatherResponse? {
-        var londonWeather: WeatherResponse? = null
-        ApiConfig.getApiService("London").getAllProvinsi("London").enqueue(object : Callback<WeatherResponse> {
-            override fun onResponse(
-                call: Call<WeatherResponse>,
-                response: Response<WeatherResponse>
-            ) {
-                val body = response.body()
-                val code = response.code()
-                if (code == 200) {
-                    londonWeather = body
-                }
-            }
+    override fun onClickItem(data: WeatherResponse) {
 
-            override fun onFailure(call: Call<WeatherResponse>, t: Throwable) {
-                Log.d("MainActivity", "onFailure: ${t.message}")
-            }
-        })
-        return londonWeather
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }
