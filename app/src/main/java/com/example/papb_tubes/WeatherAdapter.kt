@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.papb_tubes.databinding.ItemRowBinding
 
 class WeatherAdapter(
@@ -35,7 +36,7 @@ class WeatherAdapter(
                 tvNamakota.text = data.name
                 tvTemperatur.text = temp.toString()
                 tvTipe.text = data.weather[0].description
-
+                Glide.with(itemView).load("https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png").into(ivCuaca)
                 root.setOnClickListener {
                     onClickItem.onClickItem(data)
                 }

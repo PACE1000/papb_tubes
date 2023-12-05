@@ -82,25 +82,16 @@
                 android:paddingLeft="90dp"
                 android:src="@drawable/baseline_person_24" />
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+
             <EditText
                 android:id="@+id/etSearch"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:hint="Search City"
                 android:imeOptions="actionSearch"
                 android:inputType="text"
                 android:layout_margin="16dp"/>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cari"
-                android:layout_gravity="center"
-                android:id="@+id/btn_cari"/>
-        </LinearLayout>
+
         <TextView
             android:layout_marginTop="30dp"
             android:id="@+id/tv_home"

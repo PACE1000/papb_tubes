@@ -1,6 +1,8 @@
 package com.example.papb_tubes
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -82,11 +84,23 @@ class HomeFragment : Fragment(), WeatherAdapter.OnClickListener {
             adapter = WeatherAdapter(this@HomeFragment)
         }
 
-        fetchAllData()
+        binding.etSearch.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+               fetchAllData(city = s.toString())
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+        })
     }
 
-    private fun fetchAllData(){
-        ApiConfig.getApiService("London").getAllProvinsi("London")
+    private fun fetchAllData(city:String){
+        ApiConfig.getApiService(city).getAllProvinsi(city)
             .enqueue(object : Callback<WeatherResponse>{
                 override fun onResponse(
                     call: Call<WeatherResponse>,
