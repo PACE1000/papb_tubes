@@ -90,7 +90,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_r"
-            android:text="Shifa Aulia Oktifyanindar 21060120140099"
+            android:text="Shifa Auliya Oktifyanindar 21060120140099"
             android:textSize="15sp"
             android:textColor="@color/white"
             android:layout_gravity="center"/>
